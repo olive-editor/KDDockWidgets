@@ -10,27 +10,40 @@
 */
 
 import QtQuick 2.9
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Controls 1.5 as QQC1
+
+import com.kdab.dockwidgets 2.0 as KDDW
 
 Item {
     anchors.fill: parent
 
-    property alias background: background.source
-    property alias logo: logo.source
+    property var background
+    property var logo
 
+	KDDW.LayoutSaver {
+		id: layoutSaver
+	}
 
-    Image {
-        id: background
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
+	Rectangle {
+		anchors.fill: parent
+		color: "green"
 
-        Image {
-            id: logo
+		ColumnLayout {
+			Button {
+				text: "Save"
+				onClicked: {
+					layoutSaver.saveToFile ("/tmp/layout");
+				}
+			}
 
-            fillMode: Image.PreserveAspectFit
-            anchors {
-                fill: parent
-                margins: 50
-            }
-        }
-    }
+			Button {
+				text: "Restore"
+				onClicked: {
+					layoutSaver.restoreFromFile ("/tmp/layout");
+				}
+			}
+		}
+	}
 }

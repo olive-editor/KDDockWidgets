@@ -33,6 +33,26 @@ KDDW.TitleBarBase {
     }
 
     Rectangle {
+        id: floatButton
+        visible: root.floatButtonVisible
+        radius: 5
+        color: "red"
+        height: root.height - 20
+        width: height
+        anchors {
+            right: closeButton.left
+            rightMargin: 10
+            verticalCenter: root.verticalCenter
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                root.floatButtonClicked();
+            }
+        }
+    }
+
+    Rectangle {
         id: closeButton
         enabled: root.closeButtonEnabled
         radius: 5
