@@ -25,6 +25,7 @@
 
 #include <QApplication>
 
+#include <qpushbutton.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -190,9 +191,19 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         dock->setIcon(QIcon::fromTheme(QStringLiteral("mail-message")));
 
     auto myWidget = newMyWidget();
-    if (count == 8 && m_maxSizeForDockWidget8) {
+    if (count == 8/* && m_maxSizeForDockWidget8*/) {
         // Set a maximum size on dock #8
-        myWidget->setMaximumSize(200, 200);
+        myWidget->setFixedSize(250, 250);
+        auto button = new QPushButton("dump debug info", myWidget);
+        connect(button, &QPushButton::clicked, this, [myWidget] {
+            qDebug() << "Widget: " << myWidget->geometry() << myWidget->minimumSize() << myWidget->minimumSizeHint() << myWidget->maximumSize() << myWidget->sizeHint() << myWidget->window();
+
+            auto tlw =  myWidget->window();
+            qDebug() << "TLW   : " << tlw << tlw->geometry() << tlw->minimumSize() << tlw->minimumSizeHint() << tlw->maximumSize() << tlw->sizeHint();
+
+            auto window = tlw->windowHandle();
+            qDebug() << "Window   : " << window << window->frameGeometry() << window->geometry() << window->minimumSize() << window->maximumSize() << window->frameGeometry() << window->flags();
+        });
     }
 
     if (count == 0 && m_dock0BlocksCloseEvent)
