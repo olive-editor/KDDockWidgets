@@ -196,6 +196,8 @@ KDDockWidgets::DockWidgetBase *MyMainWindow::newDockWidget()
         myWidget->setFixedSize(250, 250);
         auto button = new QPushButton("dump debug info", myWidget);
         connect(button, &QPushButton::clicked, this, [myWidget] {
+            KDDockWidgets::Config::self().printDebug();
+
             qDebug() << "Widget: " << myWidget->geometry() << myWidget->minimumSize() << myWidget->minimumSizeHint() << myWidget->maximumSize() << myWidget->sizeHint() << myWidget->window();
 
             auto tlw =  myWidget->window();
