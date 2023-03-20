@@ -53,6 +53,8 @@ protected:
     void changeTabIcon(int index, const QIcon &) override;
     int nonContentsHeight() const override;
 
+    QSize minimumSizeHint() const override;
+
 private:
     friend class ::TestDocks;
 };

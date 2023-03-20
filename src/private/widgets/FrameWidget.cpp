@@ -183,3 +183,12 @@ int FrameWidget::nonContentsHeight() const
 
     return (tb->isVisible() ? tb->height() : 0) + (tabBar->isVisible() ? tabBar->height() : 0);
 }
+
+QSize FrameWidget::minimumSizeHint() const
+{
+  QSize s = dockWidgetsMinSize();
+  QWidget *w = m_tabWidget->asWidget();
+  QStyleOptionTabWidgetFrame opt;
+
+  return w->style()->sizeFromContents(QStyle::CT_TabWidget, &opt, s, w);
+}
